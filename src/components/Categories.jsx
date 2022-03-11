@@ -10,11 +10,16 @@ class Categories extends Component {
   // }
 
   render() {
-    const { propId, propCategorie } = this.props;
+    const { propId, propCategorie, propCategoriesList } = this.props;
     return (
       <section className="section-categories">
 
-        <button data-testid="category" type="button" id={ propId }>
+        <button
+          data-testid="category"
+          type="button"
+          id={ propId }
+          onClick={ propCategoriesList }
+        >
           {propCategorie}
         </button>
 
@@ -26,6 +31,7 @@ class Categories extends Component {
 Categories.propTypes = {
   propId: PropTypes.string.isRequired,
   propCategorie: PropTypes.string.isRequired,
+  propCategoriesList: PropTypes.func.isRequired,
 };
 
 export default Categories;
