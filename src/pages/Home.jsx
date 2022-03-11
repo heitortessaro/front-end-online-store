@@ -1,25 +1,45 @@
 import React, { Component } from 'react';
+import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import { Link } from 'react-router-dom';
-
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      queryInput: '',
+      hasSearched: false,
+      sarchedProducts: [],
       categories: [],
     };
-
-    // this.teste = this.teste.bind(this);
-    // this.categoriesList = this.categoriesList.bind(this);
+    this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.categoriesList();
   }
+  
+  async onSearchButtonClick() {
+    const { queryInput } = this.state;
+    try {
+      const results = await getProductsFromCategoryAndQuery(null, queryInput);
+      console.log("MEU COMENTARIO");
+      console.log(results);
+      this.setState({
+        hasSearched: true,
+        sarchedProducts: results,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  onInputChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  };
+  
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
     this.setState({ categories: categoriesRequest });
@@ -27,28 +47,65 @@ export default class Home extends Component {
   }
 
   render() {
-    const { categories } = this.state;
+    const {
+      queryInput,
+      hasSearched,
+      sarchedProducts,
+      categories,
+    } = this.state;
     return (
       <div>
-        <label htmlFor="input-search" data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-          <input type="text" id="input-search" name="search" />
-        </label>
-              <Link
-          data-testid="shopping-cart-button"
-          to="/carrinho"
-        >
-          <img
-            width="50px"
-            src="../image/carrinho-de-compras.png"
-            alt="icone de carrinho de compras"
-          />
-        </Link>
+        <section data-testid="home-initial-message">
+         <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+         <Link
+            data-testid="shopping-cart-button"
+            to="/carrinho"
+          >
+            <img
+              width="50px"
+              src="../image/carrinho-de-compras.png"
+              alt="icone de carrinho de compras"
+            />
+          </Link>
+          <label htmlFor="seachInput">
+            <input
+              type="text"
+              id="seachInput"
+              name="queryInput"
+              data-testid="query-input"
+              value={ queryInput }
+              onChange={ this.onInputChange }
+            />
+          </label>
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.onSearchButtonClick }
+          >
+            Buscar
+          </button>
+        </section>
         {categories.map((categorie) => (<Categories
           key={ categorie.id }
           propId={ categorie.id }
           propCategorie={ categorie.name }
         />)) }
+        <section className="product-search-result">
+          { hasSearched && sarchedProducts.length > 0
+            && sarchedProducts.map((product) => (
+              <div
+                key={ product.id }
+                className="product-card"
+              >
+                <ProductCard
+                  productImg={ product.thumbnail }
+                  productName={ product.title }
+                  productPrice={ product.price }
+                />
+              </div>)) }
+          { hasSearched && sarchedProducts.length === 0
+            && <p data-testid="product"> Nenhum produto foi encontrado</p> }
+        </section>
       </div>
     );
   }
