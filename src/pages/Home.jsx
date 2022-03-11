@@ -11,35 +11,22 @@ export default class Home extends Component {
       sarchedProducts: [],
     };
     this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
-    // this.handleClickSearch = this.handleClickSearch.bind(this);
   }
 
   async onSearchButtonClick() {
     const { queryInput } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(undefined, queryInput);
+    const { results } = await getProductsFromCategoryAndQuery(null, queryInput);
     console.log(results);
     this.setState({
       hasSearched: true,
       sarchedProducts: results,
     });
-    // console.log(queryInput);
   }
-
-  // handleClickSearch() {
-  //   console.log('Testesss');
-  // }
 
   onInputChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
-
-  // async teste() {
-  //   const categories = await getCategories();
-  //   console.log(categories);
-  //   const productus = await getProductsFromCategoryAndQuery('MLB1403');
-  //   console.log(productus);
-  // }
 
   render() {
     const {
@@ -49,13 +36,14 @@ export default class Home extends Component {
     } = this.state;
     return (
       <div>
-        <section>
-          <label htmlFor="query-input" data-testid="home-initial-message">
+        <section data-testid="home-initial-message">
+          <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+          <label htmlFor="seachInput">
             <input
               type="text"
-              id="query-input"
+              id="seachInput"
               name="queryInput"
-              testid="query-input"
+              data-testid="query-input"
               value={ queryInput }
               onChange={ this.onInputChange }
             />
@@ -69,17 +57,20 @@ export default class Home extends Component {
           </button>
         </section>
         <section className="product-search-result">
-          { !hasSearched
-            && <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>}
-          { hasSearched
+          { hasSearched && sarchedProducts.length > 0
             && sarchedProducts.map((product) => (
-              <div key={ product.id }>
+              <div
+                key={ product.id }
+                className="product-card"
+              >
                 <ProductCard
                   productImg={ product.thumbnail }
                   productName={ product.title }
                   productPrice={ product.price }
                 />
               </div>)) }
+          { hasSearched && sarchedProducts.length === 0
+            && <p data-testid="product"> Nenhum produto foi encontrado</p> }
         </section>
       </div>
     );
