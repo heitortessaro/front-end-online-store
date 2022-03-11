@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ProductCard from '../components/ProductCard';
-import { getProductsFromCategoryAndQuery } from '../services/api';
+import Categories from '../components/Categories';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { Link } from 'react-router-dom';
 
 export default class Home extends Component {
   constructor(props) {
@@ -9,10 +11,15 @@ export default class Home extends Component {
       queryInput: '',
       hasSearched: false,
       sarchedProducts: [],
+      categories: [],
     };
     this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
   }
 
+  componentDidMount() {
+    this.categoriesList();
+  }
+  
   async onSearchButtonClick() {
     const { queryInput } = this.state;
     try {
@@ -32,17 +39,34 @@ export default class Home extends Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
+  
+  categoriesList = async () => {
+    const categoriesRequest = await getCategories();
+    this.setState({ categories: categoriesRequest });
+    console.log(categoriesRequest);
+  }
 
   render() {
     const {
       queryInput,
       hasSearched,
       sarchedProducts,
+      categories,
     } = this.state;
     return (
       <div>
         <section data-testid="home-initial-message">
-          <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+         <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+         <Link
+            data-testid="shopping-cart-button"
+            to="/carrinho"
+          >
+            <img
+              width="50px"
+              src="../image/carrinho-de-compras.png"
+              alt="icone de carrinho de compras"
+            />
+          </Link>
           <label htmlFor="seachInput">
             <input
               type="text"
@@ -61,6 +85,11 @@ export default class Home extends Component {
             Buscar
           </button>
         </section>
+        {categories.map((categorie) => (<Categories
+          key={ categorie.id }
+          propId={ categorie.id }
+          propCategorie={ categorie.name }
+        />)) }
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
             && sarchedProducts.map((product) => (
