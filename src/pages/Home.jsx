@@ -108,16 +108,23 @@ export default class Home extends Component {
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
             && sarchedProducts.map((product) => (
-              <div
+              <Link
+                to={ `/produto${product.id}` }
                 key={ product.id }
-                className="product-card"
+                data-testid="product-detail-link"
+
               >
-                <ProductCard
-                  productImg={ product.thumbnail }
-                  productName={ product.title }
-                  productPrice={ product.price }
-                />
-              </div>)) }
+                <div
+                  className="product-card"
+                >
+                  <ProductCard
+                    productImg={ product.thumbnail }
+                    productName={ product.title }
+                    productPrice={ product.price }
+                  />
+                </div>
+              </Link>
+            ))}
           { hasSearched && sarchedProducts.length === 0
             && <p data-testid="product"> Nenhum produto foi encontrado</p> }
         </section>
