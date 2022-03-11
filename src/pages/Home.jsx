@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
-import { Link } from 'react-router-dom';
 
 export default class Home extends Component {
   constructor(props) {
@@ -19,12 +19,12 @@ export default class Home extends Component {
   componentDidMount() {
     this.categoriesList();
   }
-  
+
   async onSearchButtonClick() {
     const { queryInput } = this.state;
     try {
       const results = await getProductsFromCategoryAndQuery(null, queryInput);
-      console.log("MEU COMENTARIO");
+      console.log('MEU COMENTARIO');
       console.log(results);
       this.setState({
         hasSearched: true,
@@ -39,7 +39,7 @@ export default class Home extends Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
-  
+
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
     this.setState({ categories: categoriesRequest });
@@ -56,8 +56,8 @@ export default class Home extends Component {
     return (
       <div>
         <section data-testid="home-initial-message">
-         <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
-         <Link
+          <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+          <Link
             data-testid="shopping-cart-button"
             to="/carrinho"
           >
