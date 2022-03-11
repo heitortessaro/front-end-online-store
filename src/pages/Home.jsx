@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Categories from '../components/Categories';
 import { getCategories } from '../services/api';
+import { Link } from 'react-router-dom';
+
 
 export default class Home extends Component {
   constructor(props) {
@@ -32,6 +34,16 @@ export default class Home extends Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
           <input type="text" id="input-search" name="search" />
         </label>
+              <Link
+          data-testid="shopping-cart-button"
+          to="/carrinho"
+        >
+          <img
+            width="50px"
+            src="../image/carrinho-de-compras.png"
+            alt="icone de carrinho de compras"
+          />
+        </Link>
         {categories.map((categorie) => (<Categories
           key={ categorie.id }
           propId={ categorie.id }
