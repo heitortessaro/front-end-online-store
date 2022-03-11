@@ -14,7 +14,6 @@ export default class Home extends Component {
       categories: [],
     };
     this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
-    // this.onCategoriesClick = this.onCategoriesClick.bind(this);
   }
 
   componentDidMount() {
@@ -25,8 +24,6 @@ export default class Home extends Component {
     const { queryInput } = this.state;
     try {
       const results = await getProductsFromCategoryAndQuery(null, queryInput);
-      console.log('MEU COMENTARIO');
-      console.log(results);
       this.setState({
         hasSearched: true,
         sarchedProducts: results,
@@ -44,6 +41,17 @@ export default class Home extends Component {
   onCategoriesClick = async ({ target }) => {
     const { id } = target;
     console.log(id);
+
+    try {
+      const results = await getProductsFromCategoryAndQuery(id, null);
+      // console.log(results);
+      this.setState({
+        hasSearched: true,
+        sarchedProducts: results,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   categoriesList = async () => {

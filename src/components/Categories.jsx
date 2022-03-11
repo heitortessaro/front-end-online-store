@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Categories extends Component {
-  // constructor() {
-  // super();
-  // this.state = {
-  //   categories: '',
-  // };
-  // }
-
   render() {
     const { propId, propCategorie, propOnClickCategory } = this.props;
     return (
