@@ -10,7 +10,7 @@ class Categories extends Component {
   // }
 
   render() {
-    const { propId, propCategorie, propCategoriesList } = this.props;
+    const { propId, propCategorie, propOnClickCategory } = this.props;
     return (
       <section className="section-categories">
 
@@ -18,7 +18,7 @@ class Categories extends Component {
           data-testid="category"
           type="button"
           id={ propId }
-          onClick={ propCategoriesList }
+          onClick={ propOnClickCategory }
         >
           {propCategorie}
         </button>
@@ -31,7 +31,7 @@ class Categories extends Component {
 Categories.propTypes = {
   propId: PropTypes.string.isRequired,
   propCategorie: PropTypes.string.isRequired,
-  propCategoriesList: PropTypes.func.isRequired,
+  propOnClickCategory: PropTypes.func.isRequired,
 };
 
 export default Categories;

@@ -14,6 +14,7 @@ export default class Home extends Component {
       categories: [],
     };
     this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
+    // this.onCategoriesClick = this.onCategoriesClick.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +40,11 @@ export default class Home extends Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
+
+  onCategoriesClick = async ({ target }) => {
+    const { id } = target;
+    console.log(id);
+  }
 
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
@@ -89,6 +95,7 @@ export default class Home extends Component {
           key={ categorie.id }
           propId={ categorie.id }
           propCategorie={ categorie.name }
+          propOnClickCategory={ this.onCategoriesClick }
         />)) }
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
