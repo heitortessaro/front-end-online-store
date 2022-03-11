@@ -15,12 +15,17 @@ export default class Home extends Component {
 
   async onSearchButtonClick() {
     const { queryInput } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(null, queryInput);
-    console.log(results);
-    this.setState({
-      hasSearched: true,
-      sarchedProducts: results,
-    });
+    try {
+      const results = await getProductsFromCategoryAndQuery(null, queryInput);
+      console.log("MEU COMENTARIO");
+      console.log(results);
+      this.setState({
+        hasSearched: true,
+        sarchedProducts: results,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   onInputChange = ({ target }) => {
