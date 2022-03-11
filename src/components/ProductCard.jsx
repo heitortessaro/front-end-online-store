@@ -24,5 +24,5 @@ export default class ProductCard extends Component {
 ProductCard.propTypes = {
   productImg: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
-  productPrice: PropTypes.string.isRequired,
+  productPrice: PropTypes.number.isRequired,
 };

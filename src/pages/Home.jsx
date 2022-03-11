@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import ProductCard from '../components/ProductCard';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    // this.handleClickSearch = this.handleClickSearch.bind(this);
     this.state = {
       queryInput: '',
+      hasSearched: false,
+      sarchedProducts: [],
     };
+    this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
+    // this.handleClickSearch = this.handleClickSearch.bind(this);
   }
 
-  // async handleClickSearch() {
+  async onSearchButtonClick() {
+    const { queryInput } = this.state;
+    const { results } = await getProductsFromCategoryAndQuery(undefined, queryInput);
+    console.log(results);
+    this.setState({
+      hasSearched: true,
+      sarchedProducts: results,
+    });
+    // console.log(queryInput);
+  }
 
+  // handleClickSearch() {
+  //   console.log('Testesss');
   // }
 
   onInputChange = ({ target }) => {
     const { name, value } = target;
-    console.log(value);
     this.setState({ [name]: value });
   };
 
@@ -30,6 +44,8 @@ export default class Home extends Component {
   render() {
     const {
       queryInput,
+      hasSearched,
+      sarchedProducts,
     } = this.state;
     return (
       <div>
@@ -47,12 +63,23 @@ export default class Home extends Component {
           <button
             type="button"
             data-testid="query-button"
+            onClick={ this.onSearchButtonClick }
           >
             Buscar
           </button>
         </section>
         <section className="product-search-result">
-          Digite algum termo de pesquisa ou escolha uma categoria.
+          { !hasSearched
+            && <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>}
+          { hasSearched
+            && sarchedProducts.map((product) => (
+              <div key={ product.id }>
+                <ProductCard
+                  productImg={ product.thumbnail }
+                  productName={ product.title }
+                  productPrice={ product.price }
+                />
+              </div>)) }
         </section>
       </div>
     );
