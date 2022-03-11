@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Categories extends Component {
-  // constructor() {
-  // super();
-  // this.state = {
-  //   categories: '',
-  // };
-  // }
-
   render() {
-    const { propId, propCategorie } = this.props;
+    const { propId, propCategorie, propOnClickCategory } = this.props;
     return (
       <section className="section-categories">
 
-        <button data-testid="category" type="button" id={ propId }>
+        <button
+          data-testid="category"
+          type="button"
+          id={ propId }
+          onClick={ propOnClickCategory }
+        >
           {propCategorie}
         </button>
 
@@ -26,6 +24,7 @@ class Categories extends Component {
 Categories.propTypes = {
   propId: PropTypes.string.isRequired,
   propCategorie: PropTypes.string.isRequired,
+  propOnClickCategory: PropTypes.func.isRequired,
 };
 
 export default Categories;

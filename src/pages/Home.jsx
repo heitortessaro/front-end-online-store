@@ -24,8 +24,6 @@ export default class Home extends Component {
     const { queryInput } = this.state;
     try {
       const results = await getProductsFromCategoryAndQuery(null, queryInput);
-      console.log('MEU COMENTARIO');
-      console.log(results);
       this.setState({
         hasSearched: true,
         sarchedProducts: results,
@@ -39,6 +37,22 @@ export default class Home extends Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
+
+  onCategoriesClick = async ({ target }) => {
+    const { id } = target;
+    console.log(id);
+
+    try {
+      const results = await getProductsFromCategoryAndQuery(id, null);
+      // console.log(results);
+      this.setState({
+        hasSearched: true,
+        sarchedProducts: results,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
@@ -89,6 +103,7 @@ export default class Home extends Component {
           key={ categorie.id }
           propId={ categorie.id }
           propCategorie={ categorie.name }
+          propOnClickCategory={ this.onCategoriesClick }
         />)) }
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
