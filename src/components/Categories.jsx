@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Categories extends Component {
   // constructor() {
@@ -9,13 +10,22 @@ class Categories extends Component {
   // }
 
   render() {
+    const { propId, propCategorie } = this.props;
     return (
       <section className="section-categories">
-        categorias
-        {/* map() */}
+
+        <button data-testid="category" type="button" id={ propId }>
+          {propCategorie}
+        </button>
+
       </section>
     );
   }
 }
+
+Categories.propTypes = {
+  propId: PropTypes.string.isRequired,
+  propCategorie: PropTypes.string.isRequired,
+};
 
 export default Categories;
