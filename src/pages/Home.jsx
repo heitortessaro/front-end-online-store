@@ -24,10 +24,10 @@ export default class Home extends Component {
   async onSearchButtonClick() {
     const { queryInput } = this.state;
     try {
-      const results = await getProductsFromCategoryAndQuery(null, queryInput);
+      const search = await getProductsFromCategoryAndQuery(null, queryInput);
       this.setState({
         hasSearched: true,
-        sarchedProducts: results,
+        sarchedProducts: search.results,
       });
     } catch (error) {
       console.log(error);
@@ -44,11 +44,11 @@ export default class Home extends Component {
     console.log(id);
 
     try {
-      const results = await getProductsFromCategoryAndQuery(id, null);
+      const search = await getProductsFromCategoryAndQuery(id, null);
       // console.log(results);
       this.setState({
         hasSearched: true,
-        sarchedProducts: results,
+        sarchedProducts: search.results,
       });
     } catch (error) {
       console.log(error);
