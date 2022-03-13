@@ -28,7 +28,7 @@ export default class Cart extends Component {
 
   async fetchItem(list) {
     const productsInfo = await getItemsOfList(list);
-    console.log(productsInfo);
+    // console.log(productsInfo);
     this.setState({ productsInsideCart: productsInfo });
   }
 
