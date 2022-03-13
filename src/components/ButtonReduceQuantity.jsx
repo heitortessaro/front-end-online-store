@@ -28,7 +28,7 @@ export default class ButtonReduceQUantity extends Component {
       <div className="button-reduce-quantity">
         <button
           type="button"
-          data-testid="product-add-to-cart"
+          data-testid="product-decrease-quantity"
           disabled={ buttonDisabled }
           onClick={ () => this.reduceQuantity(productId) }
         >
