@@ -58,8 +58,7 @@ export default class Cart extends Component {
               />
             )) }
           </div>
-        )
-        }
+        ) }
       </div>
     );
   }
