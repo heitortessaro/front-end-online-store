@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { getItemsOfList } from '../services/api';
 import ProductCardOfCart from '../components/ProductCardOfCart';
+import ButtonIncreaseQUantity from '../components/ButtonIncreaseQuantity';
+import ButtonReduceQUantity from '../components/ButtonReduceQuantity';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -8,6 +10,7 @@ export default class Cart extends Component {
     this.state = {
       hasItem: false,
       productsInsideCart: [],
+      itemsQuantity: [],
     };
   }
 
@@ -28,8 +31,17 @@ export default class Cart extends Component {
 
   async fetchItem(list) {
     const productsInfo = await getItemsOfList(list);
+    const quantity = productsInfo.map((product) => { 
+      const cartItemQuantity = JSON.parse(window.localStorage.getItem(product.id));
+      // const productId = ;
+      return { [product.id]: cartItemQuantity };
+    });
     // console.log(productsInfo);
-    this.setState({ productsInsideCart: productsInfo });
+    // console.log(quantity);
+    this.setState({
+      productsInsideCart: productsInfo,
+      itemsQuantity: quantity, 
+    });
   }
 
   render() {
@@ -49,13 +61,16 @@ export default class Cart extends Component {
         && (
           <div className="cart-item">
             {productsInsideCart.map((product) => (
-              <ProductCardOfCart
-                key={ product.id }
-                productImg={ product.thumbnail }
-                productName={ product.title }
-                productPrice={ product.price }
-                productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
-              />
+              <div key={ product.id }>
+                <ProductCardOfCart
+                  productImg={ product.thumbnail }
+                  productName={ product.title }
+                  productPrice={ product.price }
+                  productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
+                />
+                <ButtonIncreaseQUantity productId={ product.id } />
+                <ButtonReduceQUantity productId={ product.id } />
+              </div>
             )) }
           </div>
         ) }

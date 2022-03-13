@@ -10,9 +10,11 @@ export default class ButtonReduceQUantity extends Component {
   reduceQuantity = (id) => {
     const response = JSON.parse(window.localStorage.getItem(id));
     if (response) {
-      window.localStorage.setItem(id, `${response - 1}`);
-      if (response < 1) {
+      if (response - 1 < 1) {
+        window.localStorage.removeItem(id);
         this.setState({ buttonDisabled: true });
+      } else {
+        window.localStorage.setItem(id, `${response - 1}`);
       }
     }
   }
