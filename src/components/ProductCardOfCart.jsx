@@ -17,11 +17,13 @@ export default class ProductCardOfCart extends Component {
           { productName }
         </h3>
         <img src={ productImg } alt={ productName } />
-        <span>{ productPrice }</span>
+        <br />
+        <span>{ `Preço: ${productPrice}` }</span>
+        <br />
         <span
           data-testid="shopping-cart-product-quantity"
         >
-          { productQuantity }
+          { `Quantidade: ${productQuantity}` }
         </span>
       </div>
     );

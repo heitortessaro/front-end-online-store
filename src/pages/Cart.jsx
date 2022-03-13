@@ -54,7 +54,7 @@ export default class Cart extends Component {
                 productImg={ product.thumbnail }
                 productName={ product.title }
                 productPrice={ product.price }
-                productQuantity={ 1 }
+                productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
               />
             )) }
           </div>
