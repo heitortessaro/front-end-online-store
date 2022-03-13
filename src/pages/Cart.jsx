@@ -13,7 +13,7 @@ export default class Cart extends Component {
 
   componentDidMount() {
     const productList = this.loadProductsOnLocalStorage();
-    if (productList) {
+    if (productList.length !== 0) {
       this.fetchItem(productList);
       this.setState({
         hasItem: true,
