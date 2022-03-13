@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class ProductCard extends Component {
+export default class ProductCardOfCart extends Component {
   render() {
     const {
       productImg,
@@ -28,9 +28,9 @@ export default class ProductCard extends Component {
   }
 }
 
-ProductCard.propTypes = {
+ProductCardOfCart.propTypes = {
   productImg: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
-  productQuantity: PropTypes.string.isRequired,
+  productQuantity: PropTypes.number.isRequired,
 };

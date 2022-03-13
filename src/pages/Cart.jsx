@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getItem, getItemsOfList } from '../services/api';
+import { getItemsOfList } from '../services/api';
+import ProductCardOfCart from '../components/ProductCardOfCart';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -26,13 +27,9 @@ export default class Cart extends Component {
   }
 
   async fetchItem(list) {
-    // for (let index = 0; index < list.length; index += 1) {
-    //   const response = await getItem(list[index]);
-    //   console.log(response);
-    // }
-    const response = await getItemsOfList(list);
-    console.log(response);
-    console.log("foi");
+    const productsInfo = await getItemsOfList(list);
+    console.log(productsInfo);
+    this.setState({ productsInsideCart: productsInfo });
   }
 
   render() {
@@ -48,6 +45,21 @@ export default class Cart extends Component {
             Seu carrinho está vazio
           </p>
         )}
+        { hasItem
+        && (
+          <div className="cart-item">
+            {productsInsideCart.map((product) => (
+              <ProductCardOfCart
+                key={ product.id }
+                productImg={ product.thumbnail }
+                productName={ product.title }
+                productPrice={ product.price }
+                productQuantity={ 1 }
+              />
+            )) }
+          </div>
+        )
+        }
       </div>
     );
   }
