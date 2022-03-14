@@ -29,9 +29,21 @@ export default class Cart extends Component {
     return productList;
   }
 
+  reduceQuantity = (id) => {
+    const response = JSON.parse(window.localStorage.getItem(id));
+    if (response) {
+      if (response - 1 < 1) {
+        window.localStorage.removeItem(id);
+        // this.setState({ buttonDisabled: true });
+      } else {
+        window.localStorage.setItem(id, `${response - 1}`);
+      }
+    }
+  }
+
   async fetchItem(list) {
     const productsInfo = await getItemsOfList(list);
-    const quantity = productsInfo.map((product) => { 
+    const quantity = productsInfo.map((product) => {
       const cartItemQuantity = JSON.parse(window.localStorage.getItem(product.id));
       // const productId = ;
       return { [product.id]: cartItemQuantity };
@@ -40,7 +52,7 @@ export default class Cart extends Component {
     // console.log(quantity);
     this.setState({
       productsInsideCart: productsInfo,
-      itemsQuantity: quantity, 
+      itemsQuantity: quantity,
     });
   }
 
@@ -48,6 +60,7 @@ export default class Cart extends Component {
     const {
       hasItem,
       productsInsideCart,
+      itemsQuantity,
     } = this.state;
     return (
       <div>
@@ -66,7 +79,10 @@ export default class Cart extends Component {
                   productImg={ product.thumbnail }
                   productName={ product.title }
                   productPrice={ product.price }
-                  productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
+                  // duas opções:
+                    // deixar as funcoes nos botões e utilizar uma callback para atualizar o estado quantity
+                    // puxar as funcoes para a page Cart e depois passá-las como prop
+                  // productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
                 />
                 <ButtonIncreaseQUantity productId={ product.id } />
                 <ButtonReduceQUantity productId={ product.id } />
