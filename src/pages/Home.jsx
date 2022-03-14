@@ -28,6 +28,7 @@ export default class Home extends Component {
         hasSearched: true,
         sarchedProducts: results,
       });
+      console.log(results);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +45,7 @@ export default class Home extends Component {
 
     try {
       const results = await getProductsFromCategoryAndQuery(id, null);
-      // console.log(results);
+      console.log(results);
       this.setState({
         hasSearched: true,
         sarchedProducts: results,
@@ -111,8 +112,9 @@ export default class Home extends Component {
               <Link
                 to={ `/produto${product.id}` }
                 key={ product.id }
+                productName={ product.title }
+                propproduct={ product.title }
                 data-testid="product-detail-link"
-
               >
                 <div
                   className="product-card"
