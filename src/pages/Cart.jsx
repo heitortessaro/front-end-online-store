@@ -80,9 +80,11 @@ export default class Cart extends Component {
                   productName={ product.title }
                   productPrice={ product.price }
                   // duas opções:
-                    // deixar as funcoes nos botões e utilizar uma callback para atualizar o estado quantity
-                    // puxar as funcoes para a page Cart e depois passá-las como prop
+                  // deixar as funcoes nos botões e utilizar uma callback para atualizar o estado quantity
+                  // puxar as funcoes para a page Cart e depois passá-las como prop
                   // productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
+                  productQuantity={ Object.values(itemsQuantity.filter((productObj) => Object
+                    .keys(productObj).includes(product.id))[0]) }
                 />
                 <ButtonIncreaseQUantity productId={ product.id } />
                 <ButtonReduceQUantity productId={ product.id } />
