@@ -22,6 +22,7 @@ export default class ButtonReduceQUantity extends Component {
   render() {
     const {
       productId,
+      reduceQuantity,
     } = this.props;
     const {
       buttonDisabled,
@@ -32,7 +33,8 @@ export default class ButtonReduceQUantity extends Component {
           type="button"
           data-testid="product-decrease-quantity"
           disabled={ buttonDisabled }
-          onClick={ () => this.reduceQuantity(productId) }
+          // onClick={ () => this.reduceQuantity(productId) }
+          onClick={ () => reduceQuantity(productId) }
         >
           -
         </button>
@@ -43,4 +45,5 @@ export default class ButtonReduceQUantity extends Component {
 
 ButtonReduceQUantity.propTypes = {
   productId: PropTypes.string.isRequired,
+  reduceQuantity: PropTypes.func.isRequired,
 };

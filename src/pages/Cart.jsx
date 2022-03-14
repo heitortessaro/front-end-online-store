@@ -30,24 +30,35 @@ export default class Cart extends Component {
   }
 
   reduceQuantity = (id) => {
+    const { itemsQuantity, productsInsideCart } = this.state;
     const response = JSON.parse(window.localStorage.getItem(id));
-    if (response) {
-      if (response - 1 < 1) {
-        window.localStorage.removeItem(id);
-        // this.setState({ buttonDisabled: true });
-      } else {
-        window.localStorage.setItem(id, `${response - 1}`);
-      }
+    // if (response) {
+    if (response - 1 < 1) {
+      window.localStorage.removeItem(id);
+      const newCart = productsInsideCart.filter((product) => !(Object
+        .keys(product).includes(id)));
+      const newItemsQuantity = itemsQuantity
+        .filter((product) => product[0] !== id);
+      this.setState({
+        itemsQuantity: newItemsQuantity,
+        productsInsideCart: newCart,
+      });
+    } else {
+      window.localStorage.setItem(id, `${response - 1}`);
+      const quantity = Object.entries(localStorage);
+      this.setState({ itemsQuantity: quantity });
     }
+    // }
   }
 
   async fetchItem(list) {
     const productsInfo = await getItemsOfList(list);
-    const quantity = productsInfo.map((product) => {
-      const cartItemQuantity = JSON.parse(window.localStorage.getItem(product.id));
-      // const productId = ;
-      return { [product.id]: cartItemQuantity };
-    });
+    // const quantity = productsInfo.map((product) => {
+    //   const cartItemQuantity = JSON.parse(window.localStorage.getItem(product.id));
+    //   // const productId = ;
+    //   return { [product.id]: cartItemQuantity };
+    // });
+    const quantity = Object.entries(localStorage);
     // console.log(productsInfo);
     // console.log(quantity);
     this.setState({
@@ -83,11 +94,16 @@ export default class Cart extends Component {
                   // deixar as funcoes nos botões e utilizar uma callback para atualizar o estado quantity
                   // puxar as funcoes para a page Cart e depois passá-las como prop
                   // productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
-                  productQuantity={ Object.values(itemsQuantity.filter((productObj) => Object
-                    .keys(productObj).includes(product.id))[0]) }
+                  // productQuantity={ Object.values(itemsQuantity.filter((productObj) => Object
+                  //   .keys(productObj).includes(product.id))[0]) }
+                  productQuantity={ itemsQuantity
+                    .filter((productArr) => productArr[0] === product.id)[0] }
                 />
                 <ButtonIncreaseQUantity productId={ product.id } />
-                <ButtonReduceQUantity productId={ product.id } />
+                <ButtonReduceQUantity
+                  productId={ product.id }
+                  reduceQuantity={ this.reduceQuantity }
+                />
               </div>
             )) }
           </div>

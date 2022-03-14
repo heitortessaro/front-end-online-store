@@ -9,7 +9,9 @@ export default class ProductCardOfCart extends Component {
       productPrice,
       productQuantity,
     } = this.props;
-    // console.log(productQuantity[0]);
+    // const quantity = productQuantity[1];
+    // console.log(typeof quantity);
+    // console.log(productQuantity);
     return (
       <div data-testid="product">
         <h3
@@ -24,7 +26,7 @@ export default class ProductCardOfCart extends Component {
         <span
           data-testid="shopping-cart-product-quantity"
         >
-          { `Quantidade: ${productQuantity[0]}` }
+          { `Quantidade: ${productQuantity[1]}` }
         </span>
       </div>
     );
@@ -35,5 +37,5 @@ ProductCardOfCart.propTypes = {
   productImg: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
-  productQuantity: PropTypes.arrayOf(PropTypes.number).isRequired,
+  productQuantity: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
