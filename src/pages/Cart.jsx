@@ -35,13 +35,17 @@ export default class Cart extends Component {
     // if (response) {
     if (response - 1 < 1) {
       window.localStorage.removeItem(id);
-      const newCart = productsInsideCart.filter((product) => !(Object
-        .keys(product).includes(id)));
-      const newItemsQuantity = itemsQuantity
+      const newCart = productsInsideCart.filter((product) => id !== product.id);
+      const quantity = itemsQuantity
         .filter((product) => product[0] !== id);
+      let hasItem = true;
+      if (quantity.length === 0) {
+        hasItem = false;
+      }
       this.setState({
-        itemsQuantity: newItemsQuantity,
         productsInsideCart: newCart,
+        itemsQuantity: quantity,
+        hasItem,
       });
     } else {
       window.localStorage.setItem(id, `${response - 1}`);
@@ -73,6 +77,8 @@ export default class Cart extends Component {
       productsInsideCart,
       itemsQuantity,
     } = this.state;
+    console.log(productsInsideCart);
+    console.log(itemsQuantity);
     return (
       <div>
         { !hasItem
