@@ -29,6 +29,7 @@ export default class Home extends Component {
         hasSearched: true,
         sarchedProducts: search.results,
       });
+      // console.log(results);
     } catch (error) {
       console.log(error);
     }
@@ -109,19 +110,26 @@ export default class Home extends Component {
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
             && sarchedProducts.map((product) => (
-              <div
-                key={ product.id }
-                className="product-card"
-              >
-                <ProductCard
-                  productImg={ product.thumbnail }
-                  productName={ product.title }
-                  productPrice={ product.price }
-                />
+              <div key={ product.id }>
+                <Link
+                  to={ `/produto${product.id}` }
+                  data-testid="product-detail-link"
+                >
+                  <div
+                    className="product-card"
+                  >
+                    <ProductCard
+                      productImg={ product.thumbnail }
+                      productName={ product.title }
+                      productPrice={ product.price }
+                    />
+                  </div>
+                </Link>
                 <ButtonAddToCart
                   productId={ product.id }
                 />
-              </div>)) }
+              </div>
+            ))}
           { hasSearched && sarchedProducts.length === 0
             && <p data-testid="product"> Nenhum produto foi encontrado</p> }
         </section>
