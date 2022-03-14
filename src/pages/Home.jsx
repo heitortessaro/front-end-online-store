@@ -110,7 +110,7 @@ export default class Home extends Component {
         <section className="product-search-result">
           { hasSearched && sarchedProducts.length > 0
             && sarchedProducts.map((product) => (
-              <div key={ product.id } >
+              <div key={ product.id }>
                 <Link
                   to={ `/produto${product.id}` }
                   data-testid="product-detail-link"
