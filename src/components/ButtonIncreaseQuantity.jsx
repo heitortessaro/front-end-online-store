@@ -7,16 +7,17 @@ export default class ButtonIncreaseQUantity extends Component {
     this.state = { buttonDisabled: false };
   }
 
-  increaseQuantity = (id) => {
-    const response = JSON.parse(window.localStorage.getItem(id));
-    if (response) {
-      window.localStorage.setItem(id, `${response + 1}`);
-    }
-  }
+  // increaseQuantity = (id) => {
+  //   const response = JSON.parse(window.localStorage.getItem(id));
+  //   if (response) {
+  //     window.localStorage.setItem(id, `${response + 1}`);
+  //   }
+  // }
 
   render() {
     const {
       productId,
+      increaseQuantity,
     } = this.props;
     const {
       buttonDisabled,
@@ -27,7 +28,8 @@ export default class ButtonIncreaseQUantity extends Component {
           type="button"
           data-testid="product-increase-quantity"
           disabled={ buttonDisabled }
-          onClick={ () => this.increaseQuantity(productId) }
+          onClick={ () => increaseQuantity(productId) }
+          // onClick={ () => reduceQuantity(productId) }
         >
           +
         </button>
@@ -38,4 +40,5 @@ export default class ButtonIncreaseQUantity extends Component {
 
 ButtonIncreaseQUantity.propTypes = {
   productId: PropTypes.string.isRequired,
+  increaseQuantity: PropTypes.func.isRequired,
 };

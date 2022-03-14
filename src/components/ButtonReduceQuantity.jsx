@@ -7,17 +7,17 @@ export default class ButtonReduceQUantity extends Component {
     this.state = { buttonDisabled: false };
   }
 
-  reduceQuantity = (id) => {
-    const response = JSON.parse(window.localStorage.getItem(id));
-    if (response) {
-      if (response - 1 < 1) {
-        window.localStorage.removeItem(id);
-        this.setState({ buttonDisabled: true });
-      } else {
-        window.localStorage.setItem(id, `${response - 1}`);
-      }
-    }
-  }
+  // reduceQuantity = (id) => {
+  //   const response = JSON.parse(window.localStorage.getItem(id));
+  //   if (response) {
+  //     if (response - 1 < 1) {
+  //       window.localStorage.removeItem(id);
+  //       this.setState({ buttonDisabled: true });
+  //     } else {
+  //       window.localStorage.setItem(id, `${response - 1}`);
+  //     }
+  //   }
+  // }
 
   render() {
     const {
