@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
+import ButtonAddToCart from '../components/ButtonAddToCart';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
@@ -23,10 +24,10 @@ export default class Home extends Component {
   async onSearchButtonClick() {
     const { queryInput } = this.state;
     try {
-      const results = await getProductsFromCategoryAndQuery(null, queryInput);
+      const search = await getProductsFromCategoryAndQuery(null, queryInput);
       this.setState({
         hasSearched: true,
-        sarchedProducts: results,
+        sarchedProducts: search.results,
       });
     } catch (error) {
       console.log(error);
@@ -43,11 +44,11 @@ export default class Home extends Component {
     console.log(id);
 
     try {
-      const results = await getProductsFromCategoryAndQuery(id, null);
+      const search = await getProductsFromCategoryAndQuery(id, null);
       // console.log(results);
       this.setState({
         hasSearched: true,
-        sarchedProducts: results,
+        sarchedProducts: search.results,
       });
     } catch (error) {
       console.log(error);
@@ -57,7 +58,7 @@ export default class Home extends Component {
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
     this.setState({ categories: categoriesRequest });
-    console.log(categoriesRequest);
+    // console.log(categoriesRequest);
   }
 
   render() {
@@ -116,6 +117,9 @@ export default class Home extends Component {
                   productImg={ product.thumbnail }
                   productName={ product.title }
                   productPrice={ product.price }
+                />
+                <ButtonAddToCart
+                  productId={ product.id }
                 />
               </div>)) }
           { hasSearched && sarchedProducts.length === 0
