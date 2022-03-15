@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
-// import ButtonAddToCart from '../components/ButtonAddToCart';
+import ButtonAddToCart from '../components/ButtonAddToCart';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
@@ -140,17 +140,20 @@ export default class Home extends Component {
                     />
                   </div>
                 </Link>
-                {/* <ButtonAddToCart
-                  productId={ product.id }
-                /> */}
-                <button
+                <ButtonAddToCart
+                  productObj={ product }
+                  key={ index }
+                  // data-testid="product-add-to-cart"
+                  add2Cart={ this.add2Cart }
+                />
+                {/* <button
                   key={ index }
                   type="button"
                   data-testid="product-add-to-cart"
                   onClick={ () => this.add2Cart(product) }
                 >
                   Comprar
-                </button>
+                </button> */}
               </div>
             ))}
           { hasSearched && sarchedProducts.length === 0
