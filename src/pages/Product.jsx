@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getItem } from '../services/api';
+import Checkout from '../components/Checkout';
 
 class Product extends Component {
   state = { product: {} }
@@ -23,6 +24,7 @@ class Product extends Component {
     return (
       <div data-testid="product-detail-name">
         <h1>Detalhes do Produto</h1>
+        <Checkout />
         <h3>
           {product.title}
         </h3>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getItemsOfList } from '../services/api';
 import ProductCardOfCart from '../components/ProductCardOfCart';
+import Checkout from '../components/Checkout';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -47,17 +48,20 @@ export default class Cart extends Component {
         )}
         { hasItem
         && (
-          <div className="cart-item">
-            {productsInsideCart.map((product) => (
-              <ProductCardOfCart
-                key={ product.id }
-                productImg={ product.thumbnail }
-                productName={ product.title }
-                productPrice={ product.price }
-                productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
-              />
-            )) }
-          </div>
+          <>
+            <Checkout />
+            <div className="cart-item">
+              {productsInsideCart.map((product) => (
+                <ProductCardOfCart
+                  key={ product.id }
+                  productImg={ product.thumbnail }
+                  productName={ product.title }
+                  productPrice={ product.price }
+                  productQuantity={ JSON.parse(window.localStorage.getItem(product.id)) }
+                />
+              )) }
+            </div>
+          </>
         ) }
       </div>
     );

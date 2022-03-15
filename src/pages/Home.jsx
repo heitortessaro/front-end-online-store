@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
 import ButtonAddToCart from '../components/ButtonAddToCart';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import Checkout from '../components/Checkout';
 
 export default class Home extends Component {
   constructor(props) {
@@ -100,6 +101,7 @@ export default class Home extends Component {
           >
             Buscar
           </button>
+          <Checkout />
         </section>
         {categories.map((categorie) => (<Categories
           key={ categorie.id }
