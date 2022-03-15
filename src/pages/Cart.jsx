@@ -36,49 +36,44 @@ export default class Cart extends Component {
     return productList;
   }
 
-  // reduceQuantity = (id) => {
-  //   const { itemsQuantity, productsInsideCart } = this.state;
-  //   const response = JSON.parse(window.localStorage.getItem(id));
-  //   if (response - 1 < 1) {
-  //     window.localStorage.removeItem(id);
-  //     const newCart = productsInsideCart.filter((product) => id !== product.id);
-  //     const quantity = itemsQuantity
-  //       .filter((product) => product[0] !== id);
-  //     let hasItem = true;
-  //     if (quantity.length === 0) {
-  //       hasItem = false;
-  //     }
-  //     this.setState({
-  //       productsInsideCart: newCart,
-  //       itemsQuantity: quantity,
-  //       hasItem,
-  //     });
-  //   } else {
-  //     window.localStorage.setItem(id, `${response - 1}`);
-  //     const quantity = Object.entries(localStorage);
-  //     this.setState({ itemsQuantity: quantity });
-  //   }
-  // }
+  reduceQuantity = (id) => {
+    const { productsInsideCart } = this.state;
+    const productObj = JSON.parse(window.localStorage.getItem(id));
+    // if (productObj.quantity - 1 < 1) {
+    //   window.localStorage.removeItem(id);
+    //   let hasItem = true;
+    //   const NUMBER_OF_ITEMS_BEFORE_DROP_OUT = 1;
+    //   if (productsInsideCart.length === NUMBER_OF_ITEMS_BEFORE_DROP_OUT) {
+    //     hasItem = false;
+    //   }
+    //   this.setState(
+    //     {
+    //     hasItem,
+    //     },
+    //     { () => updateState() }
+    //   )
+    //     const productList = this.loadProductsOnLocalStorage();
+    //     this.loadItemsObj(productList);
+    //   }});
+    // } else {
+    // const productObj = JSON.parse(window.localStorage.getItem(id));
+    productObj.quantity -= 1;
+    window.localStorage.setItem(id, JSON.stringify(productObj));
+    this.updateState();
+    // }
+  }
 
   increaseQuantity = (id) => {
     const productObj = JSON.parse(window.localStorage.getItem(id));
     productObj.quantity += 1;
     window.localStorage.setItem(id, JSON.stringify(productObj));
+    this.updateState();
+  };
+
+  updateState = () => {
     const productList = this.loadProductsOnLocalStorage();
     this.loadItemsObj(productList);
-    // window.localStorage.setItem(id, `${response + 1}`);
-    // const quantity = Object.entries(localStorage);
-    // this.setState({ itemsQuantity: quantity });
-  }
-
-  // async fetchItem(list) {
-  //   const productsInfo = await getItemsOfList(list);
-  //   const quantity = Object.entries(localStorage);
-  //   this.setState({
-  //     productsInsideCart: productsInfo,
-  //     itemsQuantity: quantity,
-  //   });
-  // }
+  };
 
   loadItemsObj(list) {
     const productsInfo = list.map((id) => JSON.parse(window.localStorage.getItem(id)));
@@ -122,7 +117,7 @@ export default class Cart extends Component {
               />
               <ButtonReduceQUantity
                 productId={ product.id }
-                // reduceQuantity={ this.reduceQuantity }
+                reduceQuantity={ this.reduceQuantity }
               />
             </div>
           ))
