@@ -26,7 +26,7 @@ export default class ProductCardOfCart extends Component {
         <span
           data-testid="shopping-cart-product-quantity"
         >
-          { `Quantidade: ${productQuantity[1]}` }
+          { `Quantidade: ${productQuantity}` }
         </span>
       </div>
     );
@@ -37,5 +37,5 @@ ProductCardOfCart.propTypes = {
   productImg: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
-  productQuantity: PropTypes.arrayOf(PropTypes.string).isRequired,
+  productQuantity: PropTypes.number.isRequired,
 };

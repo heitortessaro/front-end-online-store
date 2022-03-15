@@ -10,18 +10,25 @@ export default class Cart extends Component {
     this.state = {
       hasItem: false,
       productsInsideCart: [],
-      itemsQuantity: [],
+      // itemsQuantity: [],
     };
   }
 
   componentDidMount() {
     const productList = this.loadProductsOnLocalStorage();
+    // console.log(productList);
     if (productList.length !== 0) {
-      this.fetchItem(productList);
+      this.loadItemsObj(productList);
       this.setState({
         hasItem: true,
       });
     }
+    // if (productList.length !== 0) {
+    //   this.fetchItem(productList);
+    //   this.setState({
+    //     hasItem: true,
+    //   });
+    // }
   }
 
   loadProductsOnLocalStorage = () => {
@@ -29,43 +36,53 @@ export default class Cart extends Component {
     return productList;
   }
 
-  reduceQuantity = (id) => {
-    const { itemsQuantity, productsInsideCart } = this.state;
-    const response = JSON.parse(window.localStorage.getItem(id));
-    if (response - 1 < 1) {
-      window.localStorage.removeItem(id);
-      const newCart = productsInsideCart.filter((product) => id !== product.id);
-      const quantity = itemsQuantity
-        .filter((product) => product[0] !== id);
-      let hasItem = true;
-      if (quantity.length === 0) {
-        hasItem = false;
-      }
-      this.setState({
-        productsInsideCart: newCart,
-        itemsQuantity: quantity,
-        hasItem,
-      });
-    } else {
-      window.localStorage.setItem(id, `${response - 1}`);
-      const quantity = Object.entries(localStorage);
-      this.setState({ itemsQuantity: quantity });
-    }
-  }
+  // reduceQuantity = (id) => {
+  //   const { itemsQuantity, productsInsideCart } = this.state;
+  //   const response = JSON.parse(window.localStorage.getItem(id));
+  //   if (response - 1 < 1) {
+  //     window.localStorage.removeItem(id);
+  //     const newCart = productsInsideCart.filter((product) => id !== product.id);
+  //     const quantity = itemsQuantity
+  //       .filter((product) => product[0] !== id);
+  //     let hasItem = true;
+  //     if (quantity.length === 0) {
+  //       hasItem = false;
+  //     }
+  //     this.setState({
+  //       productsInsideCart: newCart,
+  //       itemsQuantity: quantity,
+  //       hasItem,
+  //     });
+  //   } else {
+  //     window.localStorage.setItem(id, `${response - 1}`);
+  //     const quantity = Object.entries(localStorage);
+  //     this.setState({ itemsQuantity: quantity });
+  //   }
+  // }
 
-  increaseQuantity = (id) => {
-    const response = JSON.parse(window.localStorage.getItem(id));
-    window.localStorage.setItem(id, `${response + 1}`);
-    const quantity = Object.entries(localStorage);
-    this.setState({ itemsQuantity: quantity });
-  }
+  // increaseQuantity = (id) => {
+  //   const response = JSON.parse(window.localStorage.getItem(id));
+  //   window.localStorage.setItem(id, `${response + 1}`);
+  //   const quantity = Object.entries(localStorage);
+  //   this.setState({ itemsQuantity: quantity });
+  // }
 
-  async fetchItem(list) {
-    const productsInfo = await getItemsOfList(list);
-    const quantity = Object.entries(localStorage);
+  // async fetchItem(list) {
+  //   const productsInfo = await getItemsOfList(list);
+  //   const quantity = Object.entries(localStorage);
+  //   this.setState({
+  //     productsInsideCart: productsInfo,
+  //     itemsQuantity: quantity,
+  //   });
+  // }
+
+  loadItemsObj(list) {
+    // const productsInfo = await getItemsOfList(list);
+    // const quantity = Object.entries(localStorage);
+    const productsInfo = list.map((id) => JSON.parse(window.localStorage.getItem(id)));
+    // console.log(productsInfo);
     this.setState({
       productsInsideCart: productsInfo,
-      itemsQuantity: quantity,
     });
   }
 
@@ -73,7 +90,7 @@ export default class Cart extends Component {
     const {
       hasItem,
       productsInsideCart,
-      itemsQuantity,
+      // itemsQuantity,
     } = this.state;
     return (
       <div>
@@ -93,16 +110,17 @@ export default class Cart extends Component {
                 productImg={ product.thumbnail }
                 productName={ product.title }
                 productPrice={ product.price }
-                productQuantity={ itemsQuantity
-                  .filter((productArr) => productArr[0] === product.id)[0] }
+                // productQuantity={ itemsQuantity
+                //   .filter((productArr) => productArr[0] === product.id)[0] }
+                productQuantity={ product.quantity }
               />
               <ButtonIncreaseQUantity
                 productId={ product.id }
-                increaseQuantity={ this.increaseQuantity }
+                // increaseQuantity={ this.increaseQuantity }
               />
               <ButtonReduceQUantity
                 productId={ product.id }
-                reduceQuantity={ this.reduceQuantity }
+                // reduceQuantity={ this.reduceQuantity }
               />
             </div>
           ))
