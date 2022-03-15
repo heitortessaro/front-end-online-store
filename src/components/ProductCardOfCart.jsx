@@ -9,6 +9,9 @@ export default class ProductCardOfCart extends Component {
       productPrice,
       productQuantity,
     } = this.props;
+    // const quantity = productQuantity[1];
+    // console.log(typeof quantity);
+    // console.log(productQuantity);
     return (
       <div data-testid="product">
         <h3
