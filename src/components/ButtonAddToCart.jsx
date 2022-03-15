@@ -37,6 +37,6 @@ export default class ButtonAddToCart extends Component {
 }
 
 ButtonAddToCart.propTypes = {
-  productObj: PropTypes.object.isRequired,
+  productObj: PropTypes.shape({}).isRequired,
   add2Cart: PropTypes.func.isRequired,
 };
