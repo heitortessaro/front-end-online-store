@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getItemsOfList } from '../services/api';
+// import { getItemsOfList } from '../services/api';
 import ProductCardOfCart from '../components/ProductCardOfCart';
 import ButtonIncreaseQUantity from '../components/ButtonIncreaseQuantity';
 import ButtonReduceQUantity from '../components/ButtonReduceQuantity';
@@ -60,12 +60,16 @@ export default class Cart extends Component {
   //   }
   // }
 
-  // increaseQuantity = (id) => {
-  //   const response = JSON.parse(window.localStorage.getItem(id));
-  //   window.localStorage.setItem(id, `${response + 1}`);
-  //   const quantity = Object.entries(localStorage);
-  //   this.setState({ itemsQuantity: quantity });
-  // }
+  increaseQuantity = (id) => {
+    const productObj = JSON.parse(window.localStorage.getItem(id));
+    productObj.quantity += 1;
+    window.localStorage.setItem(id, JSON.stringify(productObj));
+    const productList = this.loadProductsOnLocalStorage();
+    this.loadItemsObj(productList);
+    // window.localStorage.setItem(id, `${response + 1}`);
+    // const quantity = Object.entries(localStorage);
+    // this.setState({ itemsQuantity: quantity });
+  }
 
   // async fetchItem(list) {
   //   const productsInfo = await getItemsOfList(list);
@@ -77,8 +81,6 @@ export default class Cart extends Component {
   // }
 
   loadItemsObj(list) {
-    // const productsInfo = await getItemsOfList(list);
-    // const quantity = Object.entries(localStorage);
     const productsInfo = list.map((id) => JSON.parse(window.localStorage.getItem(id)));
     // console.log(productsInfo);
     this.setState({
@@ -116,7 +118,7 @@ export default class Cart extends Component {
               />
               <ButtonIncreaseQUantity
                 productId={ product.id }
-                // increaseQuantity={ this.increaseQuantity }
+                increaseQuantity={ this.increaseQuantity }
               />
               <ButtonReduceQUantity
                 productId={ product.id }

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Categories from '../components/Categories';
-import ButtonAddToCart from '../components/ButtonAddToCart';
-import { getCategories, getItem, getProductsFromCategoryAndQuery } from '../services/api';
+// import ButtonAddToCart from '../components/ButtonAddToCart';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
   constructor(props) {
@@ -61,14 +61,12 @@ export default class Home extends Component {
     const response = JSON.parse(window.localStorage.getItem(id));
     if (response) {
       product.quantity += 1;
-      console.log(product.quantity);
-      // window.localStorage.setItem(id, `${response + 1}`);
+      // console.log(product.quantity);
       window.localStorage.setItem(id, JSON.stringify(product));
     } else {
-      // window.localStorage.setItem(id, '1');
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
-      console.log(product.quantity);
+      // console.log(product.quantity);
     }
   }
 
