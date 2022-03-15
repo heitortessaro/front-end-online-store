@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { getItemsOfList } from '../services/api';
 import ProductCardOfCart from '../components/ProductCardOfCart';
+import Checkout from '../components/Checkout';
 import ButtonIncreaseQUantity from '../components/ButtonIncreaseQuantity';
 import ButtonReduceQUantity from '../components/ButtonReduceQuantity';
 
@@ -10,7 +10,6 @@ export default class Cart extends Component {
     this.state = {
       hasItem: false,
       productsInsideCart: [],
-      // itemsQuantity: [],
     };
   }
 
@@ -23,12 +22,6 @@ export default class Cart extends Component {
         hasItem: true,
       });
     }
-    // if (productList.length !== 0) {
-    //   this.fetchItem(productList);
-    //   this.setState({
-    //     hasItem: true,
-    //   });
-    // }
   }
 
   loadProductsOnLocalStorage = () => {
@@ -93,24 +86,27 @@ export default class Cart extends Component {
         && (
           // <div className="cart-item">
           //   {
-          productsInsideCart.map((product, index) => (
-            <div key={ index + product.id }>
-              <ProductCardOfCart
-                productImg={ product.thumbnail }
-                productName={ product.title }
-                productPrice={ product.price }
-                productQuantity={ product.quantity }
-              />
-              <ButtonIncreaseQUantity
-                productId={ product.id }
-                increaseQuantity={ this.increaseQuantity }
-              />
-              <ButtonReduceQUantity
-                productId={ product.id }
-                reduceQuantity={ this.reduceQuantity }
-              />
-            </div>
-          ))
+          <>
+            <Checkout />
+            { productsInsideCart.map((product, index) => (
+              <div key={ index + product.id }>
+                <ProductCardOfCart
+                  productImg={ product.thumbnail }
+                  productName={ product.title }
+                  productPrice={ product.price }
+                  productQuantity={ product.quantity }
+                />
+                <ButtonIncreaseQUantity
+                  productId={ product.id }
+                  increaseQuantity={ this.increaseQuantity }
+                />
+                <ButtonReduceQUantity
+                  productId={ product.id }
+                  reduceQuantity={ this.reduceQuantity }
+                />
+              </div>
+            )) }
+          </>
         ) }
       </div>
     );
