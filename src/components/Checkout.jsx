@@ -7,7 +7,7 @@ class Checkout extends Component {
     render() {
       return (
         <Link to="/comprar">
-          <button checkout-products type="button">Comprar</button>
+          <button data-testid="checkout-products" type="button">Comprar</button>
         </Link>
       );
     }

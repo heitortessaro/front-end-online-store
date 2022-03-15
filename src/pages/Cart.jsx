@@ -22,12 +22,6 @@ export default class Cart extends Component {
         hasItem: true,
       });
     }
-    // if (productList.length !== 0) {
-    //   this.fetchItem(productList);
-    //   this.setState({
-    //     hasItem: true,
-    //   });
-    // }
   }
 
   loadProductsOnLocalStorage = () => {

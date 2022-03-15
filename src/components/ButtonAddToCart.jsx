@@ -29,7 +29,7 @@ export default class ButtonAddToCart extends Component {
           data-testid="product-add-to-cart"
           onClick={ () => add2Cart(productObj) }
         >
-          Comprar
+          Adicionar ao Carrinho
         </button>
       </div>
     );
