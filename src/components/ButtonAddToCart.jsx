@@ -20,10 +20,13 @@ export default class ButtonAddToCart extends Component {
       productId,
     } = this.props;
     return (
-      <div className="button-add-to-cart">
+      <div 
+        className="button-add-to-cart"
+        data-testid="product-add-to-cart"
+      >
         <button
           type="button"
-          data-testid="product-add-to-cart"
+          // data-testid="product-add-to-cart"
           onClick={ () => this.add2Cart(productId) }
         >
           Comprar

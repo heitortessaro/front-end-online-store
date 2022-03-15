@@ -85,27 +85,29 @@ export default class Cart extends Component {
         )}
         { hasItem
         && (
-          <div className="cart-item">
-            {productsInsideCart.map((product) => (
-              <div key={ product.id }>
-                <ProductCardOfCart
-                  productImg={ product.thumbnail }
-                  productName={ product.title }
-                  productPrice={ product.price }
-                  productQuantity={ itemsQuantity
-                    .filter((productArr) => productArr[0] === product.id)[0] }
-                />
-                <ButtonIncreaseQUantity
-                  productId={ product.id }
-                  increaseQuantity={ this.increaseQuantity }
-                />
-                <ButtonReduceQUantity
-                  productId={ product.id }
-                  reduceQuantity={ this.reduceQuantity }
-                />
-              </div>
-            )) }
-          </div>
+          // <div className="cart-item">
+          //   {
+          productsInsideCart.map((product, index) => (
+            <div key={ index + product.id }>
+              <ProductCardOfCart
+                productImg={ product.thumbnail }
+                productName={ product.title }
+                productPrice={ product.price }
+                productQuantity={ itemsQuantity
+                  .filter((productArr) => productArr[0] === product.id)[0] }
+              />
+              <ButtonIncreaseQUantity
+                productId={ product.id }
+                increaseQuantity={ this.increaseQuantity }
+              />
+              <ButtonReduceQUantity
+                productId={ product.id }
+                reduceQuantity={ this.reduceQuantity }
+              />
+            </div>
+          ))
+          // }
+          // </div>
         ) }
       </div>
     );

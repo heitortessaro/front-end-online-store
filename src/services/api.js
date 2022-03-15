@@ -45,6 +45,7 @@ export async function getItem(id) {
 // multiple API calls using map instead loop
 // https://dev.to/askrishnapravin/for-loop-vs-map-for-making-multiple-api-calls-3lhd
 export async function getItemsOfList(list) {
+  // console.log(list);
   const ULR_ITEMS = 'https://api.mercadolibre.com/items/';
   let objArray = [];
   if (list.length === 0) {
@@ -52,9 +53,14 @@ export async function getItemsOfList(list) {
   }
   await Promise.all(
     list.map(async (id) => {
+      // console.log(`Id de busca: ${id}`);
+      // console.log(`${ULR_ITEMS}${id}`);
+      // const url = `${ULR_ITEMS}${id}`;
       const response = await fetch(`${ULR_ITEMS}${id}`);
+      // const response = await fetch(url);
       const data = await response.json();
       objArray = [...objArray, data];
+      // console.log(`Id do objeto retornado ${data.id}`);
     }),
   );
   return objArray;
