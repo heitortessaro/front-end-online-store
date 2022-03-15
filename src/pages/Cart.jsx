@@ -39,28 +39,22 @@ export default class Cart extends Component {
   reduceQuantity = (id) => {
     const { productsInsideCart } = this.state;
     const productObj = JSON.parse(window.localStorage.getItem(id));
-    // if (productObj.quantity - 1 < 1) {
-    //   window.localStorage.removeItem(id);
-    //   let hasItem = true;
-    //   const NUMBER_OF_ITEMS_BEFORE_DROP_OUT = 1;
-    //   if (productsInsideCart.length === NUMBER_OF_ITEMS_BEFORE_DROP_OUT) {
-    //     hasItem = false;
-    //   }
-    //   this.setState(
-    //     {
-    //     hasItem,
-    //     },
-    //     { () => updateState() }
-    //   )
-    //     const productList = this.loadProductsOnLocalStorage();
-    //     this.loadItemsObj(productList);
-    //   }});
-    // } else {
-    // const productObj = JSON.parse(window.localStorage.getItem(id));
-    productObj.quantity -= 1;
-    window.localStorage.setItem(id, JSON.stringify(productObj));
-    this.updateState();
-    // }
+    if (productObj.quantity - 1 < 1) {
+      window.localStorage.removeItem(id);
+      let hasItem = true;
+      const NUMBER_OF_ITEMS_BEFORE_DROP_OUT = 1;
+      if (productsInsideCart.length === NUMBER_OF_ITEMS_BEFORE_DROP_OUT) {
+        hasItem = false;
+      }
+      this.setState(
+        { hasItem },
+        () => this.updateState(),
+      );
+    } else {
+      productObj.quantity -= 1;
+      window.localStorage.setItem(id, JSON.stringify(productObj));
+      this.updateState();
+    }
   }
 
   increaseQuantity = (id) => {
@@ -77,7 +71,6 @@ export default class Cart extends Component {
 
   loadItemsObj(list) {
     const productsInfo = list.map((id) => JSON.parse(window.localStorage.getItem(id)));
-    // console.log(productsInfo);
     this.setState({
       productsInsideCart: productsInfo,
     });
@@ -87,7 +80,6 @@ export default class Cart extends Component {
     const {
       hasItem,
       productsInsideCart,
-      // itemsQuantity,
     } = this.state;
     return (
       <div>
@@ -107,8 +99,6 @@ export default class Cart extends Component {
                 productImg={ product.thumbnail }
                 productName={ product.title }
                 productPrice={ product.price }
-                // productQuantity={ itemsQuantity
-                //   .filter((productArr) => productArr[0] === product.id)[0] }
                 productQuantity={ product.quantity }
               />
               <ButtonIncreaseQUantity
@@ -121,8 +111,6 @@ export default class Cart extends Component {
               />
             </div>
           ))
-          // }
-          // </div>
         ) }
       </div>
     );
