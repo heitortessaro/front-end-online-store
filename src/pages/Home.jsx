@@ -30,7 +30,6 @@ export default class Home extends Component {
         hasSearched: true,
         sarchedProducts: search.results,
       });
-      // console.log(results);
     } catch (error) {
       console.log(error);
     }
@@ -43,10 +42,8 @@ export default class Home extends Component {
 
   onCategoriesClick = async ({ target }) => {
     const { id } = target;
-    // console.log(id);
     try {
       const search = await getProductsFromCategoryAndQuery(id, null);
-      // console.log(results);
       this.setState({
         hasSearched: true,
         sarchedProducts: search.results,
@@ -58,23 +55,19 @@ export default class Home extends Component {
 
   add2Cart = async (product) => {
     const { id } = product;
-    // const productInfo = await getItem(id);
     const response = JSON.parse(window.localStorage.getItem(id));
     if (response) {
       product.quantity += 1;
-      // console.log(product.quantity);
       window.localStorage.setItem(id, JSON.stringify(product));
     } else {
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
-      // console.log(product.quantity);
     }
   }
 
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
     this.setState({ categories: categoriesRequest });
-    // console.log(categoriesRequest);
   }
 
   render() {
@@ -135,7 +128,6 @@ export default class Home extends Component {
                     className="product-card"
                   >
                     <ProductCard
-                      // key={ product.id + index }
                       productImg={ product.thumbnail }
                       productName={ product.title }
                       productPrice={ product.price }
@@ -145,17 +137,9 @@ export default class Home extends Component {
                 <ButtonAddToCart
                   productObj={ product }
                   key={ index }
-                  // data-testid="product-add-to-cart"
+                  datatesteid="product-add-to-cart"
                   add2Cart={ this.add2Cart }
                 />
-                {/* <button
-                  key={ index }
-                  type="button"
-                  data-testid="product-add-to-cart"
-                  onClick={ () => this.add2Cart(product) }
-                >
-                  Comprar
-                </button> */}
               </div>
             ))}
           { hasSearched && sarchedProducts.length === 0
