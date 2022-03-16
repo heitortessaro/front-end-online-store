@@ -5,6 +5,7 @@ import Categories from '../components/Categories';
 import ButtonAddToCart from '../components/ButtonAddToCart';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Checkout from '../components/Checkout';
+import IconCart from '../components/IconCart';
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,12 +15,14 @@ export default class Home extends Component {
       hasSearched: false,
       sarchedProducts: [],
       categories: [],
+      productQuantity: 0,
     };
     this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.categoriesList();
+    this.getAllLocalStorage();
   }
 
   async onSearchButtonClick() {
@@ -63,11 +66,25 @@ export default class Home extends Component {
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
     }
+    this.getAllLocalStorage();
   }
 
   categoriesList = async () => {
     const categoriesRequest = await getCategories();
     this.setState({ categories: categoriesRequest });
+  }
+
+  getAllLocalStorage = () => {
+    const values = [];
+    const keys = Object.keys(localStorage);
+    for (let index = 0; index < keys.length; index += 1) {
+      values.push(localStorage.getItem(keys[index]));
+    }
+    console.log(values);
+    const numberOfItems = values.map((element) => JSON.parse(element))
+      .reduce((acc, current) => acc + current.quantity, 0);
+    console.log(numberOfItems);
+    this.setState({ productQuantity: numberOfItems });
   }
 
   render() {
@@ -76,21 +93,12 @@ export default class Home extends Component {
       hasSearched,
       sarchedProducts,
       categories,
+      productQuantity,
     } = this.state;
     return (
       <div>
         <section data-testid="home-initial-message">
           <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
-          <Link
-            data-testid="shopping-cart-button"
-            to="/carrinho"
-          >
-            <img
-              width="50px"
-              src="../image/carrinho-de-compras.png"
-              alt="icone de carrinho de compras"
-            />
-          </Link>
           <label htmlFor="seachInput">
             <input
               type="text"
@@ -109,6 +117,7 @@ export default class Home extends Component {
             Buscar
           </button>
           <Checkout />
+          <IconCart propQuantity={ productQuantity } />
         </section>
         {categories.map((categorie) => (<Categories
           key={ categorie.id }
