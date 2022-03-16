@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { getItem } from '../services/api';
 import Checkout from '../components/Checkout';
 import ButtonAddToCart from '../components/ButtonAddToCart';
-import { Link } from 'react-router-dom';
+import IconCart from '../components/IconCart';
 
 class Product extends Component {
-  state = { product: {} }
+  state = {
+    product: {},
+    productQuantity: 0,
+  }
 
   componentDidMount() {
     this.getDetails();
+    this.getAllLocalStorage();
   }
 
   getDetails = async () => {
@@ -31,21 +35,31 @@ class Product extends Component {
     } else {
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
-      // console.log(product.quantity);
     }
+    this.getAllLocalStorage();
+  }
+
+  getAllLocalStorage = () => {
+    const values = [];
+    const keys = Object.keys(localStorage);
+    for (let index = 0; index < keys.length; index += 1) {
+      values.push(localStorage.getItem(keys[index]));
+    }
+    console.log(values);
+    const numberOfItems = values.map((element) => JSON.parse(element))
+      .reduce((acc, current) => acc + current.quantity, 0);
+    console.log(numberOfItems);
+    this.setState({ productQuantity: numberOfItems });
   }
 
   render() {
-    const { product } = this.state;
+    const { product, productQuantity } = this.state;
     console.log(product);
     return (
       <div data-testid="product-detail-name">
         <h1>Detalhes do Produto</h1>
         <Checkout />
-        <Link
-            data-testid="shopping-cart-button"
-            to="/carrinho"
-          ></Link>
+        <IconCart propQuantity={ productQuantity } />
         <h3>
           {product.title}
         </h3>
