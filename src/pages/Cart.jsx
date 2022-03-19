@@ -15,7 +15,6 @@ export default class Cart extends Component {
 
   componentDidMount() {
     const productList = this.loadProductsOnLocalStorage();
-    // console.log(productList);
     if (productList.length !== 0) {
       this.loadItemsObj(productList);
       this.setState({
@@ -87,8 +86,6 @@ export default class Cart extends Component {
         )}
         { hasItem
         && (
-          // <div className="cart-item">
-          //   {
           <>
             <Checkout />
             { productsInsideCart.map((product, index) => (
