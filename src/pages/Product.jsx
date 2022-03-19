@@ -21,7 +21,6 @@ class Product extends Component {
     const { match: { params: {
       id } } } = this.props;
     const requestProduct = await getItem(id);
-    // console.log(requestProduct.shipping.free_shipping);
     this.setState({
       product: requestProduct,
       loading: false,
@@ -62,7 +61,6 @@ class Product extends Component {
       productQuantity,
       loading,
     } = this.state;
-    // console.log(product.shipping.free_shipping);
     return (
       <div data-testid="product-detail-name">
         <h1>Detalhes do Produto</h1>
