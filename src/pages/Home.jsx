@@ -57,11 +57,13 @@ export default class Home extends Component {
   }
 
   add2Cart = async (product) => {
-    const { id } = product;
+    const { id, available_quantity: availableQuantity } = product;
     const response = JSON.parse(window.localStorage.getItem(id));
     if (response) {
-      product.quantity += 1;
-      window.localStorage.setItem(id, JSON.stringify(product));
+      if (product.quantity < availableQuantity) {
+        product.quantity += 1;
+        window.localStorage.setItem(id, JSON.stringify(product));
+      }
     } else {
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
