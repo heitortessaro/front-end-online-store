@@ -80,10 +80,10 @@ export default class Home extends Component {
     for (let index = 0; index < keys.length; index += 1) {
       values.push(localStorage.getItem(keys[index]));
     }
-    console.log(values);
+    // console.log(values);
     const numberOfItems = values.map((element) => JSON.parse(element))
       .reduce((acc, current) => acc + current.quantity, 0);
-    console.log(numberOfItems);
+    // console.log(numberOfItems);
     this.setState({ productQuantity: numberOfItems });
   }
 
