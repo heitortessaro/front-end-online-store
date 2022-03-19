@@ -52,9 +52,12 @@ export default class Cart extends Component {
 
   increaseQuantity = (id) => {
     const productObj = JSON.parse(window.localStorage.getItem(id));
-    productObj.quantity += 1;
-    window.localStorage.setItem(id, JSON.stringify(productObj));
-    this.updateState();
+    const { available_quantity: availableQuantity } = productObj;
+    if (availableQuantity > productObj.quantity) {
+      productObj.quantity += 1;
+      window.localStorage.setItem(id, JSON.stringify(productObj));
+      this.updateState();
+    }
   };
 
   updateState = () => {
@@ -99,6 +102,9 @@ export default class Cart extends Component {
                 <ButtonIncreaseQUantity
                   productId={ product.id }
                   increaseQuantity={ this.increaseQuantity }
+                  disabled={
+                    product.quantity >= product.available_quantity
+                  }
                 />
                 <ButtonReduceQUantity
                   productId={ product.id }
