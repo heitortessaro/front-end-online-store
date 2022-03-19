@@ -9,6 +9,7 @@ class Product extends Component {
   state = {
     product: {},
     productQuantity: 0,
+    loading: true,
   }
 
   componentDidMount() {
@@ -20,8 +21,11 @@ class Product extends Component {
     const { match: { params: {
       id } } } = this.props;
     const requestProduct = await getItem(id);
-    // console.log(requestProduct);
-    this.setState({ product: requestProduct });
+    // console.log(requestProduct.shipping.free_shipping);
+    this.setState({
+      product: requestProduct,
+      loading: false,
+    });
   }
 
   add2Cart = async (product) => {
@@ -53,23 +57,35 @@ class Product extends Component {
   }
 
   render() {
-    const { product, productQuantity } = this.state;
-    // console.log(product);
+    const {
+      product,
+      productQuantity,
+      loading,
+    } = this.state;
+    // console.log(product.shipping.free_shipping);
     return (
       <div data-testid="product-detail-name">
         <h1>Detalhes do Produto</h1>
         <Checkout />
         <IconCart propQuantity={ productQuantity } />
-        <h3>
-          {product.title}
-        </h3>
-        <img src={ product.thumbnail } alt={ product.title } />
-        <p>{product.price}</p>
-        <ButtonAddToCart
-          add2Cart={ this.add2Cart }
-          productObj={ product }
-          datatesteid="product-detail-add-to-cart"
-        />
+        {loading && <p>Carregando...</p>}
+        {!loading
+        && (
+          <div>
+            <h3>
+              {product.title}
+            </h3>
+            <img src={ product.thumbnail } alt={ product.title } />
+            <p>{product.price}</p>
+            <br />
+            {product.shipping.free_shipping
+              && <span data-testid="free-shipping">Frete Gratis</span> }
+            <ButtonAddToCart
+              add2Cart={ this.add2Cart }
+              productObj={ product }
+              datatesteid="product-detail-add-to-cart"
+            />
+          </div>)}
       </div>
     );
   }
