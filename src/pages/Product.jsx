@@ -20,7 +20,7 @@ class Product extends Component {
     const { match: { params: {
       id } } } = this.props;
     const requestProduct = await getItem(id);
-    console.log(requestProduct);
+    // console.log(requestProduct);
     this.setState({ product: requestProduct });
   }
 
@@ -45,16 +45,16 @@ class Product extends Component {
     for (let index = 0; index < keys.length; index += 1) {
       values.push(localStorage.getItem(keys[index]));
     }
-    console.log(values);
+    // console.log(values);
     const numberOfItems = values.map((element) => JSON.parse(element))
       .reduce((acc, current) => acc + current.quantity, 0);
-    console.log(numberOfItems);
+    // console.log(numberOfItems);
     this.setState({ productQuantity: numberOfItems });
   }
 
   render() {
     const { product, productQuantity } = this.state;
-    console.log(product);
+    // console.log(product);
     return (
       <div data-testid="product-detail-name">
         <h1>Detalhes do Produto</h1>
