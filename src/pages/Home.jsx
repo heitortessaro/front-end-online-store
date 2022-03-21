@@ -57,11 +57,13 @@ export default class Home extends Component {
   }
 
   add2Cart = async (product) => {
-    const { id } = product;
+    const { id, available_quantity: availableQuantity } = product;
     const response = JSON.parse(window.localStorage.getItem(id));
     if (response) {
-      product.quantity += 1;
-      window.localStorage.setItem(id, JSON.stringify(product));
+      if (product.quantity < availableQuantity) {
+        product.quantity += 1;
+        window.localStorage.setItem(id, JSON.stringify(product));
+      }
     } else {
       product.quantity = 1;
       window.localStorage.setItem(id, JSON.stringify(product));
@@ -80,10 +82,10 @@ export default class Home extends Component {
     for (let index = 0; index < keys.length; index += 1) {
       values.push(localStorage.getItem(keys[index]));
     }
-    console.log(values);
+    // console.log(values);
     const numberOfItems = values.map((element) => JSON.parse(element))
       .reduce((acc, current) => acc + current.quantity, 0);
-    console.log(numberOfItems);
+    // console.log(numberOfItems);
     this.setState({ productQuantity: numberOfItems });
   }
 
